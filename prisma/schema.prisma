@@ -65,6 +65,7 @@ model Gate {
   contract         String
   contractName     String
   contractDecimals Int
+  contractIsNFT    Boolean
   numTokens        Float
   numInvites       Int
   usedInvites      Int    @default(0)

@@ -106,6 +106,7 @@ const createGatedRepo = async (
       contract,
       contractName: name,
       contractDecimals: decimals,
+      contractIsNFT: isNFT,
       numTokens,
       numInvites,
       creator: {
