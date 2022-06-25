@@ -157,7 +157,7 @@ export default function Join({ gate }: { gate: GateExtended }) {
               Accessing this repository requires having held{" "}
               {formatNumber(gate.numTokens)}{" "}
               <a
-                href={`https://etherscan.io/token/${gate.contract}`}
+                href={`https://kovan-optimistic.etherscan.io/token/${gate.contract}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -165,7 +165,7 @@ export default function Join({ gate }: { gate: GateExtended }) {
               </a>{" "}
               token{gate.numTokens == 1 ? "" : "s"} at block{" "}
               <a
-                href={`https://etherscan.io/block/${gate.blockNumber}`}
+                href={`https://kovan-optimistic.etherscan.io/block/${gate.blockNumber}`}
                 target="_blank;"
                 rel="noopener noreferrer"
               >

@@ -60,7 +60,7 @@ const collectVotesForToken = async (
   const response = await snapshot.strategies["erc20-balance-of"](
     "Count", // Any space
     // Network
-    "1",
+    "69",
     // Ethers provider
     provider,
     // Voters

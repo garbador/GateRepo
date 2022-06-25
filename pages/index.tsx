@@ -227,7 +227,7 @@ function IndividualGate({
         <p>
           <strong>Tokens Required:</strong> {formatNumber(gate.numTokens)}{" "}
           <a
-            href={`https://etherscan.io/token/${gate.contract}`}
+            href={`https://kovan-optimistic.etherscan.io/token/${gate.contract}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -238,7 +238,7 @@ function IndividualGate({
         <p>
           <strong>Token Check Block Number:</strong>{" "}
           <a
-            href={`https://etherscan.io/block/${gate.blockNumber}`}
+            href={`https://kovan-optimistic.etherscan.io/block/${gate.blockNumber}`}
             target="_blank;"
             rel="noopener noreferrer"
           >
