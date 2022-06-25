@@ -14,6 +14,38 @@ const provider = new ethers.providers.StaticJsonRpcProvider(
   1
 );
 
+const getTokenDetails = async (
+  contractAddress: string
+) : Promise<{ name: string; decimals: number; isNFT: boolean }> => {
+  // first let's check supportsInterface
+  const contract = new ethers.Contract(
+    contractAddress,
+    [
+      "function name() public view returns (string memory)",
+      "function decimals() public view returns (uint8)",
+      "function supportsInterface(bytes4 interfaceId) public view returns (bool)",
+    ],
+    provider
+  );
+
+  let isNFT = false;
+  let decimals = 0;
+  try {
+    isNFT = await contract.supportsInterface('0x5b5e139f');
+  } catch {
+  // ERC20 won't have supportsInterface
+  }
+  const name: string = await contract.name();
+  if (!isNFT) {
+    decimals = await contract.decimals();
+  }
+
+  return {
+    name, decimals, isNFT
+  }
+}
+
+
 /**
  * Collects details about ERC20 token
  * @param {string} contractAddress token
@@ -61,7 +93,7 @@ const createGatedRepo = async (
   if (!repository) throw new Error("No access to repository.");
 
   // Collect ERC20 details
-  const { name, decimals } = await getERC20Details(contract);
+  const { name, decimals, isNFT } = await getTokenDetails(contract);
   // Collect latest block number to peg balance to
   const blockNumber: number = await provider.getBlockNumber();
 
