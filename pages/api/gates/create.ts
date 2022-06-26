@@ -92,7 +92,7 @@ const createGatedRepo = async (
   const repository: Repo = await getRepo(userId, owner, repo);
   if (!repository) throw new Error("No access to repository.");
 
-  // Collect ERC20 details
+  // Collect ERC20 or 721 details
   const { name, decimals, isNFT } = await getTokenDetails(contract);
   // Collect latest block number to peg balance to
   const blockNumber: number = await provider.getBlockNumber();

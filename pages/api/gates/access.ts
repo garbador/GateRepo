@@ -2,7 +2,7 @@ import db from "prisma/db"; // DB
 import { ethers } from "ethers"; // Ethers
 import { Octokit } from "@octokit/rest"; // GitHub
 import { getSession } from "next-auth/react"; // Auth
-import snapshot from "@snapshot-labs/snapshot.js"; // Snapshot.js
+import snapshot from "@snapshot-labs/snapshot.js"; // [patched] Snapshot.js
 import { recoverPersonalSignature } from "eth-sig-util"; // Utils: Ethereum signature verification
 
 // Types
@@ -54,10 +54,12 @@ const collectVotesForToken = async (
   userAddress: string,
   tokenAddress: string,
   tokenDecimals: number,
+  tokenIsNFT: boolean,
   blockNumber: number
 ): Promise<number> => {
   // Collect balance of user
-  const response = await snapshot.strategies["erc20-balance-of"](
+  const snapshotStrat = tokenIsNFT ? "erc721" : "erc20-balance-of";
+  const response = await snapshot.strategies[snapshotStrat](
     "Count", // Any space
     // Network
     "69",
@@ -68,7 +70,6 @@ const collectVotesForToken = async (
     // Token
     {
       address: tokenAddress,
-      symbol: "Query",
       decimals: tokenDecimals,
     },
     // Block number of snapshot
@@ -149,6 +150,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     address,
     gate.contract,
     gate.contractDecimals,
+    gate.contractIsNFT,
     gate.blockNumber
   );
   if (gate.numTokens > numTokensHeld) {
